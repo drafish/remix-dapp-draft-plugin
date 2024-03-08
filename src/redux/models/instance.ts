@@ -74,9 +74,7 @@ const Model: ModelType = {
       // const {file, css, assets} = data['index.html']
       // const paths = [file, ...css, ...assets]
 
-      const { defaultAbi, ...instance } = yield select(
-        (state) => state.instance
-      );
+      const instance = yield select((state) => state.instance);
 
       const files: Record<string, string> = {
         'dir/instance.json': JSON.stringify(instance),
