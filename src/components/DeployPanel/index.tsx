@@ -100,12 +100,11 @@ function DeployPanel(): JSX.Element {
           </Alert>
         )}
         <Alert variant="info" className="mt-4">
-          Don't have a surge account? Click here to{' '}
-          <a
-            target="_blank"
-            href="https://surge.sh/help/getting-started-with-surge"
-          >
-            getting started with surge
+          Your Dapp will be deployed to surge. Your email will be automatically
+          registered as a surge account, if it's not a surge account yet. Click
+          here to learn more about{' '}
+          <a target="_blank" href="https://surge.sh/help/">
+            surge.sh
           </a>
         </Alert>
       </Form>
