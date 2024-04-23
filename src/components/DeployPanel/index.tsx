@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Button, Alert } from 'react-bootstrap';
+import { Form, Button, Alert, InputGroup } from 'react-bootstrap';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 
 function DeployPanel(): JSX.Element {
@@ -18,7 +18,7 @@ function DeployPanel(): JSX.Element {
           dispatch({ type: 'instance/reset' });
         }}
       >
-        Reset
+        Reset Functions
       </Button>
       <Button
         className="ml-3"
@@ -26,7 +26,7 @@ function DeployPanel(): JSX.Element {
           dispatch({ type: 'instance/empty' });
         }}
       >
-        Delete
+        Delete Dapp
       </Button>
       <Form
         onSubmit={(e) => {
@@ -45,7 +45,7 @@ function DeployPanel(): JSX.Element {
           <Form.Label>Email</Form.Label>
           <Form.Control
             type="email"
-            placeholder="surge email"
+            placeholder="Surge email"
             required
             value={formVal.email}
             onChange={(e) => {
@@ -57,7 +57,7 @@ function DeployPanel(): JSX.Element {
           <Form.Label>Password</Form.Label>
           <Form.Control
             type="password"
-            placeholder="surge password"
+            placeholder="Surge password"
             required
             value={formVal.password}
             onChange={(e) => {
@@ -65,24 +65,26 @@ function DeployPanel(): JSX.Element {
             }}
           />
         </Form.Group>
-        <Form.Group className="mb-3" controlId="formSubdomain">
-          <Form.Label>Subdomain</Form.Label>
+        <Form.Label>Subdomain</Form.Label>
+        <InputGroup className="mb-3">
+          <InputGroup.Text>https://</InputGroup.Text>
           <Form.Control
             type="subdomain"
-            placeholder="surge subdomain"
+            placeholder="Choose a subdomain"
             required
             value={formVal.subdomain}
             onChange={(e) => {
               setFormVal({ ...formVal, subdomain: e.target.value });
             }}
           />
-        </Form.Group>
+          <InputGroup.Text>.surge.sh</InputGroup.Text>
+        </InputGroup>
         <Button
           variant="primary"
           type="submit"
           disabled={!formVal.email || !formVal.password || !formVal.subdomain}
         >
-          {loading && <i className="fas fa-spinner fa-spin mr-1"></i>}Submit
+          {loading && <i className="fas fa-spinner fa-spin mr-1"></i>}Deploy
         </Button>
         {deployState.code === 'SUCCESS' && (
           <Alert variant="success" className="mt-4">
@@ -100,8 +102,8 @@ function DeployPanel(): JSX.Element {
           </Alert>
         )}
         <Alert variant="info" className="mt-4">
-          Your Dapp will be deployed to surge. Your email will be automatically
-          registered as a surge account, if it's not a surge account yet. Click
+          Your Dapp will be deployed to Surge. Your email will be automatically
+          registered as a Surge account, if it's not a Surge account yet. Click
           here to learn more about{' '}
           <a target="_blank" href="https://surge.sh/help/">
             surge.sh
