@@ -125,6 +125,7 @@ export function ContractGUI(props: { funcABI: any }) {
         <textarea
           className="form-control"
           placeholder="enter an introduction for this function"
+          defaultValue={props.funcABI.intro}
           onBlur={(e) => {
             dispatch({
               type: 'instance/saveIntro',

@@ -27,9 +27,15 @@ const Model: ModelType = {
       return { ...state, ...payload };
     },
     init(state, { payload }) {
+      const functionHashes: any = {};
+      for (const fun in payload.methodIdentifiers) {
+        functionHashes[payload.methodIdentifiers[fun]] = fun;
+      }
       const abi = payload.abi.filter((item: any) => {
         if (item.type === 'function') {
           item.id = encodeFunctionId(item);
+          const method = functionHashes[item.id.replace('0x', '')];
+          item.intro = payload.devdoc.methods[method].details;
           return true;
         } else {
           return false;
