@@ -67,15 +67,27 @@ const Model: ModelType = {
       });
     },
     *deploy({ payload }, { select }) {
-      try {
-        yield surgeClient.login({
-          user: payload.email,
-          password: payload.password,
-        });
-        localStorage.setItem('__SURGE_EMAIL', payload.email);
-        localStorage.setItem('__SURGE_PASSWORD', payload.password);
-      } catch (error: any) {
-        return { code: 'ERROR', error: error.message };
+      const surgeToken = localStorage.getItem('__SURGE_TOKEN');
+      let isLogin = false;
+      if (surgeToken) {
+        try {
+          yield surgeClient.whoami();
+          isLogin = true;
+        } catch (error) {
+          /* empty */
+        }
+      }
+      if (!isLogin) {
+        try {
+          yield surgeClient.login({
+            user: payload.email,
+            password: payload.password,
+          });
+          localStorage.setItem('__SURGE_EMAIL', payload.email);
+          localStorage.setItem('__SURGE_PASSWORD', payload.password);
+        } catch (error: any) {
+          return { code: 'ERROR', error: error.message };
+        }
       }
 
       // const {data} = yield axios.get('https://remix-dapp.surge.sh/manifest.json')
