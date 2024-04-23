@@ -4,8 +4,8 @@ import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 
 function DeployPanel(): JSX.Element {
   const [formVal, setFormVal] = useState({
-    email: '',
-    password: '',
+    email: localStorage.getItem('__SURGE_EMAIL') || '',
+    password: localStorage.getItem('__SURGE_PASSWORD') || '',
     subdomain: '',
   });
   const [deployState, setDeployState] = useState({ code: '', error: '' });

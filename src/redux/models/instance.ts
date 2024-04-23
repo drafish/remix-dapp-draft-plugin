@@ -72,6 +72,8 @@ const Model: ModelType = {
           user: payload.email,
           password: payload.password,
         });
+        localStorage.setItem('__SURGE_EMAIL', payload.email);
+        localStorage.setItem('__SURGE_PASSWORD', payload.password);
       } catch (error: any) {
         return { code: 'ERROR', error: error.message };
       }
