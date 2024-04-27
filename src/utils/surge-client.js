@@ -5115,7 +5115,7 @@ const Nl = (t) => {
   },
   $l = (t) => {
     const i = _t.Buffer.alloc(512);
-    return i.write(t), i;
+    return t.copy(i), i;
   },
   Hl = (t, i) => {
     Ml(t).forEach((e) => {
@@ -5127,10 +5127,13 @@ async function Pl(t) {
   return (
     Cl(Object.keys(t)).forEach((e) => {
       if (e === 'dir/') return;
-      e.endsWith('/')
-        ? i.push(Zl({ path: e }))
-        : (i.push(Ll({ path: e, size: t[e].length })),
-          Hl(t[e], i.push.bind(i)));
+      if (e.endsWith('/')) {
+        i.push(Zl({ path: e }));
+      } else {
+        t[e] = _t.Buffer.from(t[e], 'utf8');
+        i.push(Ll({ path: e, size: t[e].length }));
+        Hl(t[e], i.push.bind(i));
+      }
     }),
     i.push(gn),
     i.push(gn),
