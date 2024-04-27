@@ -1,8 +1,8 @@
+import axios from 'axios';
 // @ts-expect-error
 import SurgeClient from '../../utils/surge-client';
 import { type ModelType } from '../store';
 import { execution } from '@remix-project/remix-lib';
-import template from '../../template.html?raw';
 
 const { encodeFunctionId } = execution.txHelper;
 
@@ -90,9 +90,11 @@ const Model: ModelType = {
         }
       }
 
-      // const {data} = yield axios.get('https://remix-dapp.surge.sh/manifest.json')
-      // const {file, css, assets} = data['index.html']
-      // const paths = [file, ...css, ...assets]
+      const { data } = yield axios.get(
+        'https://remix-dapp.pages.dev/manifest.json'
+      );
+      const { src, file, css, assets } = data['index.html'];
+      const paths = [src, file, ...css, ...assets];
 
       const { defaultAbi, ...instance } = yield select(
         (state) => state.instance
@@ -101,15 +103,13 @@ const Model: ModelType = {
       const files: Record<string, string> = {
         'dir/instance.json': JSON.stringify(instance),
         'dir/defaultAbi.json': JSON.stringify(defaultAbi),
-        'dir/index.html': template,
       };
 
-      // for (let index = 0; index < paths.length; index++) {
-      //   const path = paths[index]
-      //   // const resp = yield axios.get(`https://remix-dapp.surge.sh/${path}`)
-      //   // files[`dir/${path}`] = resp.data
-      //   files['dir/index.html'] = files['dir/index.html'].replace(`/${path}`, `https://remix-dapp.surge.sh/${path}`)
-      // }
+      for (let index = 0; index < paths.length; index++) {
+        const path = paths[index];
+        const resp = yield axios.get(`https://remix-dapp.pages.dev/${path}`);
+        files[`dir/${path}`] = resp.data;
+      }
 
       try {
         yield surgeClient.publish({
