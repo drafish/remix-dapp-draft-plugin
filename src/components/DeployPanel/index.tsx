@@ -3,11 +3,21 @@ import { Form, Button, Alert, InputGroup } from 'react-bootstrap';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 
 function DeployPanel(): JSX.Element {
-  const [formVal, setFormVal] = useState({
+  const [formVal, setFormVal] = useState<any>({
     email: localStorage.getItem('__SURGE_EMAIL') || '',
     password: localStorage.getItem('__SURGE_PASSWORD') || '',
     subdomain: '',
+    shareTo: [],
   });
+  const setShareTo = (type: string) => {
+    let shareTo = formVal.shareTo;
+    if (formVal.shareTo.includes(type)) {
+      shareTo = shareTo.filter((item: string) => item !== type);
+    } else {
+      shareTo.push(type);
+    }
+    setFormVal({ ...formVal, shareTo });
+  };
   const [deployState, setDeployState] = useState({ code: '', error: '' });
   const loading = useAppSelector((state) => state.loading['instance/deploy']);
   const dispatch = useAppDispatch();
@@ -79,6 +89,35 @@ function DeployPanel(): JSX.Element {
           />
           <InputGroup.Text>.surge.sh</InputGroup.Text>
         </InputGroup>
+        <Form.Group className="mb-3" controlId="formShareTo">
+          <Form.Label>Share To</Form.Label>
+          <div key="inline-checkbox" className="mb-3">
+            <Form.Check
+              inline
+              label="Twitter"
+              name="group1"
+              type="checkbox"
+              value="twitter"
+              checked={formVal.shareTo.includes('twitter')}
+              id="inline-checkbox-1"
+              onChange={(e) => {
+                setShareTo(e.target.value);
+              }}
+            />
+            <Form.Check
+              inline
+              label="Facebook"
+              name="group1"
+              type="checkbox"
+              value="facebook"
+              checked={formVal.shareTo.includes('facebook')}
+              id="inline-checkbox-2"
+              onChange={(e) => {
+                setShareTo(e.target.value);
+              }}
+            />
+          </div>
+        </Form.Group>
         <Button
           variant="primary"
           type="submit"

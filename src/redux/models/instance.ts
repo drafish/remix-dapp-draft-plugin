@@ -101,7 +101,10 @@ const Model: ModelType = {
       );
 
       const files: Record<string, string> = {
-        'dir/instance.json': JSON.stringify(instance),
+        'dir/instance.json': JSON.stringify({
+          ...instance,
+          shareTo: payload.shareTo,
+        }),
         'dir/defaultAbi.json': JSON.stringify(defaultAbi),
       };
 
