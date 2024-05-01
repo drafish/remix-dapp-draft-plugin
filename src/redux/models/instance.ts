@@ -66,6 +66,21 @@ const Model: ModelType = {
         },
       });
     },
+    *saveTitle({ payload }, { select, put }) {
+      const abi = yield select((state) => state.instance.abi);
+
+      yield put({
+        type: 'instance/save',
+        payload: {
+          abi: abi.map((item: any) => {
+            return {
+              ...item,
+              title: item.id === payload.id ? payload.title : item.title,
+            };
+          }),
+        },
+      });
+    },
     *deploy({ payload }, { select }) {
       const surgeToken = localStorage.getItem('__SURGE_TOKEN');
       let isLogin = false;

@@ -65,17 +65,28 @@ export function ContractGUI(props: { funcABI: any }) {
   }, [lookupOnly, props.funcABI, title]);
 
   return (
-    <div
-      className={`d-inline-block udapp_contractProperty ${
-        (props.funcABI.inputs && props.funcABI.inputs.length > 0) ||
-        props.funcABI.type === 'fallback' ||
-        props.funcABI.type === 'receive'
-          ? 'udapp_hasArgs'
-          : ''
-      }`}
-    >
+    <div className={`d-inline-block udapp_contractProperty`}>
+      <div className="p-2">
+        <input
+          className="form-control"
+          placeholder="Enter a title for this function"
+          defaultValue={props.funcABI.title}
+          onBlur={(e) => {
+            dispatch({
+              type: 'instance/saveTitle',
+              payload: { id: props.funcABI.id, title: e.target.value },
+            });
+          }}
+        />
+      </div>
       <div
-        className="udapp_contractActionsContainerSingle p-2"
+        className={`udapp_contractActionsContainerSingle p-2 ${
+          (props.funcABI.inputs && props.funcABI.inputs.length > 0) ||
+          props.funcABI.type === 'fallback' ||
+          props.funcABI.type === 'receive'
+            ? 'udapp_hasArgs'
+            : ''
+        }`}
         style={{ display: 'flex' }}
       >
         <div
