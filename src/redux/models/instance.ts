@@ -156,22 +156,22 @@ const Model: ModelType = {
       }
 
       try {
-        // yield surgeClient.publish({
-        //   files,
-        //   domain: `${payload.subdomain}.surge.sh`,
-        //   onProgress: ({
-        //     id,
-        //     progress,
-        //     file,
-        //   }: {
-        //     id: string;
-        //     progress: number;
-        //     file: string;
-        //   }) => {
-        //     console.log({ id, progress, file });
-        //   },
-        //   onTick: (tick: string) => {},
-        // });
+        yield surgeClient.publish({
+          files,
+          domain: `${payload.subdomain}.surge.sh`,
+          onProgress: ({
+            id,
+            progress,
+            file,
+          }: {
+            id: string;
+            progress: number;
+            file: string;
+          }) => {
+            console.log({ id, progress, file });
+          },
+          onTick: (tick: string) => {},
+        });
       } catch (error) {
         return { code: 'ERROR', error: 'this domain belongs to someone else' };
       }
