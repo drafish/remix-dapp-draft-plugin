@@ -37,7 +37,9 @@ const Model: ModelType = {
         if (item.type === 'function') {
           item.id = encodeFunctionId(item);
           const method = functionHashes[item.id.replace('0x', '')];
-          item.intro = devdoc.methods[method].details;
+          item.intro = devdoc.methods[method]
+            ? devdoc.methods[method].details
+            : '';
           abi[item.id] = item;
         }
       });
