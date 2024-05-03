@@ -15,7 +15,7 @@ function App(): JSX.Element {
   }, []);
   return (
     <div>
-      {abi.length > 0 ? (
+      {Object.keys(abi).length > 0 ? (
         <div className="row m-0 pt-3">
           <EditInstance />
           <DeployPanel />

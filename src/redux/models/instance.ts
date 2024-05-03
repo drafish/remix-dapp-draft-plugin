@@ -19,32 +19,54 @@ const Model: ModelType = {
     name: '',
     address: '',
     network: '',
-    abi: [],
-    defaultAbi: [],
+    abi: {},
+    items: {},
+    containers: [],
   },
   reducers: {
     save(state, { payload }) {
       return { ...state, ...payload };
     },
-    init(state, { payload }) {
+    init(state, { payload: { methodIdentifiers, devdoc, ...payload } }) {
       const functionHashes: any = {};
-      for (const fun in payload.methodIdentifiers) {
-        functionHashes[payload.methodIdentifiers[fun]] = fun;
+      for (const fun in methodIdentifiers) {
+        functionHashes[methodIdentifiers[fun]] = fun;
       }
-      const abi = payload.abi.filter((item: any) => {
+      const abi: any = {};
+      payload.abi.forEach((item: any) => {
         if (item.type === 'function') {
           item.id = encodeFunctionId(item);
           const method = functionHashes[item.id.replace('0x', '')];
-          item.intro = payload.devdoc.methods[method].details;
-          return true;
-        } else {
-          return false;
+          item.intro = devdoc.methods[method].details;
+          abi[item.id] = item;
         }
       });
-      return { ...state, ...payload, abi, defaultAbi: abi };
+      const ids = Object.keys(abi);
+      const items =
+        ids.length > 1
+          ? {
+              A: ids.slice(0, ids.length / 2 + 1),
+              B: ids.slice(ids.length / 2 + 1),
+            }
+          : { A: ids };
+      return {
+        ...state,
+        ...payload,
+        abi,
+        items,
+        containers: Object.keys(items),
+      };
     },
     reset(state, _) {
-      return { ...state, abi: state.defaultAbi };
+      const ids = Object.keys(state.abi);
+      const items =
+        ids.length > 1
+          ? {
+              A: ids.slice(0, ids.length / 2 + 1),
+              B: ids.slice(ids.length / 2 + 1),
+            }
+          : { A: ids };
+      return { ...state, items, containers: Object.keys(items) };
     },
     empty(state, _) {
       return { ...state, abi: [], defaultAbi: [] };
@@ -111,17 +133,21 @@ const Model: ModelType = {
       const { src, file, css, assets } = data['index.html'];
       const paths = [src, file, ...css, ...assets];
 
-      const { defaultAbi, ...instance } = yield select(
-        (state) => state.instance
-      );
+      const instance = yield select((state) => state.instance);
 
       const files: Record<string, string> = {
         'dir/instance.json': JSON.stringify({
           ...instance,
           shareTo: payload.shareTo,
         }),
-        'dir/defaultAbi.json': JSON.stringify(defaultAbi),
       };
+
+      console.log(
+        JSON.stringify({
+          ...instance,
+          shareTo: payload.shareTo,
+        })
+      );
 
       for (let index = 0; index < paths.length; index++) {
         const path = paths[index];
@@ -130,22 +156,22 @@ const Model: ModelType = {
       }
 
       try {
-        yield surgeClient.publish({
-          files,
-          domain: `${payload.subdomain}.surge.sh`,
-          onProgress: ({
-            id,
-            progress,
-            file,
-          }: {
-            id: string;
-            progress: number;
-            file: string;
-          }) => {
-            console.log({ id, progress, file });
-          },
-          onTick: (tick: string) => {},
-        });
+        // yield surgeClient.publish({
+        //   files,
+        //   domain: `${payload.subdomain}.surge.sh`,
+        //   onProgress: ({
+        //     id,
+        //     progress,
+        //     file,
+        //   }: {
+        //     id: string;
+        //     progress: number;
+        //     file: string;
+        //   }) => {
+        //     console.log({ id, progress, file });
+        //   },
+        //   onTick: (tick: string) => {},
+        // });
       } catch (error) {
         return { code: 'ERROR', error: 'this domain belongs to someone else' };
       }
