@@ -80,7 +80,7 @@ function DeployPanel(): JSX.Element {
           <InputGroup.Text>https://</InputGroup.Text>
           <Form.Control
             type="subdomain"
-            placeholder="Choose a subdomain"
+            placeholder="Unique subdomain name"
             required
             value={formVal.subdomain}
             onChange={(e) => {
@@ -141,9 +141,11 @@ function DeployPanel(): JSX.Element {
           </Alert>
         )}
         <Alert variant="info" className="mt-4">
-          Your Dapp will be deployed to Surge. Your email will be automatically
-          registered as a Surge account, if it's not a Surge account yet. Click
-          here to learn more about{' '}
+          Your DApp will be deployed to Surge.sh. If you do not have an account
+          there, the email & password you input above will automatically
+          register you with a Surge account. Surge accounts are free until you
+          reach a level of use. The subdomain is your choice but it must be
+          unique. Click here to learn more about. Click here to learn more about{' '}
           <a target="_blank" href="https://surge.sh/help/">
             surge.sh
           </a>
