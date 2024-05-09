@@ -147,12 +147,12 @@ const Model: ModelType = {
         }),
       };
 
-      console.log(
-        JSON.stringify({
-          ...instance,
-          shareTo: payload.shareTo,
-        })
-      );
+      // console.log(
+      //   JSON.stringify({
+      //     ...instance,
+      //     shareTo: payload.shareTo,
+      //   })
+      // );
 
       for (let index = 0; index < paths.length; index++) {
         const path = paths[index];
@@ -173,7 +173,7 @@ const Model: ModelType = {
             progress: number;
             file: string;
           }) => {
-            console.log({ id, progress, file });
+            // console.log({ id, progress, file });
           },
           onTick: (tick: string) => {},
         });
