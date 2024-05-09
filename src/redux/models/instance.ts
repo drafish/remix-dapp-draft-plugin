@@ -107,8 +107,9 @@ const Model: ModelType = {
     },
     *deploy({ payload }, { select }) {
       const surgeToken = localStorage.getItem('__SURGE_TOKEN');
+      const surgeEmail = localStorage.getItem('__SURGE_EMAIL');
       let isLogin = false;
-      if (surgeToken) {
+      if (surgeToken && surgeEmail === payload.email) {
         try {
           yield surgeClient.whoami();
           isLogin = true;
