@@ -124,6 +124,7 @@ const Model: ModelType = {
           });
           localStorage.setItem('__SURGE_EMAIL', payload.email);
           localStorage.setItem('__SURGE_PASSWORD', payload.password);
+          localStorage.setItem('__DISQUS_SHORTNAME', payload.shortname);
         } catch (error: any) {
           return { code: 'ERROR', error: error.message };
         }
@@ -140,6 +141,7 @@ const Model: ModelType = {
       const files: Record<string, string> = {
         'dir/instance.json': JSON.stringify({
           ...instance,
+          shortname: payload.shortname,
           shareTo: payload.shareTo,
         }),
       };

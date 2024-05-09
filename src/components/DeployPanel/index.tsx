@@ -7,6 +7,7 @@ function DeployPanel(): JSX.Element {
     email: localStorage.getItem('__SURGE_EMAIL') || '',
     password: localStorage.getItem('__SURGE_PASSWORD') || '',
     subdomain: '',
+    shortname: localStorage.getItem('__DISQUS_SHORTNAME') || '',
     shareTo: [],
   });
   const setShareTo = (type: string) => {
@@ -89,8 +90,19 @@ function DeployPanel(): JSX.Element {
           />
           <InputGroup.Text>.surge.sh</InputGroup.Text>
         </InputGroup>
+        <Form.Group className="mb-3" controlId="formShortname">
+          <Form.Label>Disqus Shortname (Optional)</Form.Label>
+          <Form.Control
+            type="shortname"
+            placeholder="Disqus Shortname"
+            value={formVal.shortname}
+            onChange={(e) => {
+              setFormVal({ ...formVal, shortname: e.target.value });
+            }}
+          />
+        </Form.Group>
         <Form.Group className="mb-3" controlId="formShareTo">
-          <Form.Label>Share To</Form.Label>
+          <Form.Label>Share To (Optional)</Form.Label>
           <div key="inline-checkbox" className="mb-3">
             <Form.Check
               inline
