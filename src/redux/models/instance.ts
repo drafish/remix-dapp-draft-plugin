@@ -81,12 +81,10 @@ const Model: ModelType = {
       yield put({
         type: 'instance/save',
         payload: {
-          abi: abi.map((item: any) => {
-            return {
-              ...item,
-              intro: item.id === payload.id ? payload.intro : item.intro,
-            };
-          }),
+          abi: {
+            ...abi,
+            [payload.id]: { ...abi[payload.id], intro: payload.intro },
+          },
         },
       });
     },
@@ -96,12 +94,10 @@ const Model: ModelType = {
       yield put({
         type: 'instance/save',
         payload: {
-          abi: abi.map((item: any) => {
-            return {
-              ...item,
-              title: item.id === payload.id ? payload.title : item.title,
-            };
-          }),
+          abi: {
+            ...abi,
+            [payload.id]: { ...abi[payload.id], title: payload.title },
+          },
         },
       });
     },
