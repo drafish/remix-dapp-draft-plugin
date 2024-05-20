@@ -1,6 +1,5 @@
 import { useAppSelector, useAppDispatch } from '../../redux/hooks';
 import { MultipleContainers } from '../MultipleContainers';
-import './index.css';
 
 function EditInstance(): JSX.Element {
   const { abi, items, containers } = useAppSelector((state) => state.instance);

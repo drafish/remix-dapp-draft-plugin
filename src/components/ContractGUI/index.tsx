@@ -65,7 +65,7 @@ export function ContractGUI(props: { funcABI: any }) {
   }, [lookupOnly, props.funcABI, title]);
 
   return (
-    <div className={`d-inline-block udapp_contractProperty`}>
+    <div className={`d-inline-block`} style={{ width: '90%' }}>
       <div className="p-2">
         <input
           className="form-control"
@@ -79,16 +79,7 @@ export function ContractGUI(props: { funcABI: any }) {
           }}
         />
       </div>
-      <div
-        className={`udapp_contractActionsContainerSingle p-2 ${
-          (props.funcABI.inputs && props.funcABI.inputs.length > 0) ||
-          props.funcABI.type === 'fallback' ||
-          props.funcABI.type === 'receive'
-            ? 'udapp_hasArgs'
-            : ''
-        }`}
-        style={{ display: 'flex' }}
-      >
+      <div className="p-2 d-flex">
         <div
           className="d-flex btn p-0 wrapperElement"
           data-id={buttonOptions.dataId}
@@ -96,41 +87,23 @@ export function ContractGUI(props: { funcABI: any }) {
         >
           <button
             disabled
-            className={`udapp_instanceButton text-nowrap overflow-hidden text-truncate btn btn-sm ${buttonOptions.classList}`}
+            className={`text-nowrap overflow-hidden text-truncate btn btn-sm ${buttonOptions.classList}`}
             data-id={buttonOptions.dataId}
             data-title={buttonOptions.title}
-            style={{ pointerEvents: 'none' }}
+            style={{ pointerEvents: 'none', width: 100 }}
           >
             {title}
           </button>
         </div>
-        <input
-          disabled
-          className="form-control"
-          data-id={
-            props.funcABI.type === 'fallback' ||
-            props.funcABI.type === 'receive'
-              ? `'(${props.funcABI.type}')`
-              : 'multiParamManagerBasicInputField'
-          }
-          placeholder={inputs}
-          data-title={
-            props.funcABI.type === 'fallback' ||
-            props.funcABI.type === 'receive'
-              ? `'(${props.funcABI.type}')`
-              : inputs
-          }
-          style={{
-            height: '2rem',
-            visibility: !(
-              (props.funcABI.inputs && props.funcABI.inputs.length > 0) ||
-              props.funcABI.type === 'fallback' ||
-              props.funcABI.type === 'receive'
-            )
-              ? 'hidden'
-              : 'visible',
-          }}
-        />
+        {props.funcABI.inputs && props.funcABI.inputs.length > 0 && (
+          <input
+            disabled
+            className="form-control"
+            data-id={'multiParamManagerBasicInputField'}
+            placeholder={inputs}
+            data-title={inputs}
+          />
+        )}
       </div>
       <div className="p-2">
         <textarea
