@@ -1,7 +1,4 @@
-import React, {forwardRef, CSSProperties} from 'react';
-import classNames from 'classnames';
-
-import styles from './Action.module.css';
+import React, { forwardRef, CSSProperties } from 'react';
 
 export interface Props extends React.HTMLAttributes<HTMLButtonElement> {
   active?: {
@@ -12,12 +9,12 @@ export interface Props extends React.HTMLAttributes<HTMLButtonElement> {
 }
 
 export const Action = forwardRef<HTMLButtonElement, Props>(
-  ({active, className, cursor, style, ...props}, ref) => {
+  ({ active, className, cursor, style, ...props }, ref) => {
     return (
       <button
         ref={ref}
         {...props}
-        className={classNames(styles.Action, className)}
+        className={`d-flex align-items-center justify-content-center border-0 rounded p-3 item-action`}
         tabIndex={0}
         style={
           {
@@ -25,6 +22,7 @@ export const Action = forwardRef<HTMLButtonElement, Props>(
             cursor,
             '--fill': active?.fill,
             '--background': active?.background,
+            width: 12,
           } as CSSProperties
         }
       />

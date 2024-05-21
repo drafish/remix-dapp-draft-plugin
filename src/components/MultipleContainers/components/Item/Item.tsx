@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react';
-import classNames from 'classnames';
 import type { DraggableSyntheticListeners } from '@dnd-kit/core';
 import type { Transform } from '@dnd-kit/utilities';
-import styles from './Item.module.css';
 import { Handle } from './components/Handle';
 
 const removeIcon = (
@@ -73,12 +71,7 @@ export const Item = React.memo(
 
       return (
         <li
-          className={classNames(
-            styles.Wrapper,
-            fadeIn && styles.fadeIn,
-            sorting && styles.sorting,
-            dragOverlay && styles.dragOverlay
-          )}
+          className={`position-relative mb-3 list-unstyled item-wrapper`}
           style={
             {
               ...wrapperStyle,
@@ -103,13 +96,6 @@ export const Item = React.memo(
           ref={ref}
         >
           <div
-            className={classNames(
-              styles.Item,
-              dragging && styles.dragging,
-              handle && styles.withHandle,
-              dragOverlay && styles.dragOverlay,
-              disabled && styles.disabled
-            )}
             style={style}
             data-cypress="draggable-item"
             {...(!handle ? listeners : undefined)}
@@ -120,7 +106,10 @@ export const Item = React.memo(
               {children}
               <Handle {...handleProps} {...listeners} />
             </div>
-            <button className={styles.Remove} onClick={onRemove}>
+            <button
+              className={`d-flex justify-content-center align-items-center position-absolute border-0 rounded-circle item-remove`}
+              onClick={onRemove}
+            >
               {removeIcon}
             </button>
           </div>

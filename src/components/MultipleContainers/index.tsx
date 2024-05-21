@@ -436,7 +436,6 @@ export function MultipleContainers({
               label={`Column ${containerId}`}
               columns={columns}
               items={items[containerId]}
-              scrollable={scrollable}
               style={containerStyle}
               onRemove={() => handleRemove(containerId)}
             >
@@ -471,6 +470,7 @@ export function MultipleContainers({
           {containers.length < 3 && (
             <DroppableContainer
               id={PLACEHOLDER_ID}
+              key={PLACEHOLDER_ID}
               disabled={isSortingContainer}
               items={empty}
               onClick={handleAddColumn}
@@ -517,15 +517,7 @@ export function MultipleContainers({
 
   function renderContainerDragOverlay(containerId: UniqueIdentifier) {
     return (
-      <Container
-        label={`Column ${containerId}`}
-        columns={columns}
-        style={{
-          height: '100%',
-        }}
-        shadow
-        unstyled={false}
-      >
+      <Container label={`Column ${containerId}`} columns={columns}>
         {items[containerId].map((item, index) => (
           <Item
             key={item}
