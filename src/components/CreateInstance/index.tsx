@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Alert, Button, Form } from 'react-bootstrap';
-import { useAppDispatch } from '../../redux/hooks';
+import { initInstance } from '../../actions';
 import imgUrl from '../../assets/edit-dapp.png';
 
 const CreateInstance: React.FC = () => {
@@ -10,13 +10,12 @@ const CreateInstance: React.FC = () => {
     name: '',
     network: '',
   });
-  const dispatch = useAppDispatch();
   return (
     <Form
       className="w-50 m-auto"
       onSubmit={(e: any) => {
         e.preventDefault();
-        dispatch({ type: 'instance/init', payload: { ...formVal } });
+        initInstance({ ...formVal });
       }}
     >
       <Form.Group className="mb-3" controlId="formAddress">

@@ -1,6 +1,6 @@
-import { execution } from '@remix-project/remix-lib';
 import React, { useEffect, useState } from 'react';
-import { useAppDispatch } from '../../redux/hooks';
+import { execution } from '@remix-project/remix-lib';
+import { saveIntro, saveTitle } from '../../actions';
 
 const txHelper = execution.txHelper;
 
@@ -12,7 +12,6 @@ const getFuncABIInputs = (funABI: any) => {
 };
 
 export function ContractGUI(props: { funcABI: any }) {
-  const dispatch = useAppDispatch();
   const isConstant =
     props.funcABI.constant !== undefined ? props.funcABI.constant : false;
   const lookupOnly =
@@ -72,10 +71,7 @@ export function ContractGUI(props: { funcABI: any }) {
           placeholder="Enter a title for this function - if needed"
           defaultValue={props.funcABI.title}
           onBlur={(e) => {
-            dispatch({
-              type: 'instance/saveTitle',
-              payload: { id: props.funcABI.id, title: e.target.value },
-            });
+            saveTitle({ id: props.funcABI.id, title: e.target.value });
           }}
         />
       </div>
@@ -111,10 +107,7 @@ export function ContractGUI(props: { funcABI: any }) {
           placeholder="Enter instructions for this function - if needed"
           defaultValue={props.funcABI.intro}
           onBlur={(e) => {
-            dispatch({
-              type: 'instance/saveIntro',
-              payload: { id: props.funcABI.id, intro: e.target.value },
-            });
+            saveIntro({ id: props.funcABI.id, intro: e.target.value });
           }}
         />
       </div>

@@ -1,6 +1,6 @@
 import { PluginClient } from '@remixproject/plugin';
 import { createClient } from '@remixproject/plugin-webview';
-import { store } from './redux/store';
+import { initInstance } from './actions';
 
 class RemixClient extends PluginClient {
   constructor() {
@@ -18,16 +18,13 @@ class RemixClient extends PluginClient {
     //   devdoc,
     //   methodIdentifiers
     // );
-    store.dispatch({
-      type: 'instance/init',
-      payload: {
-        address,
-        abi,
-        network,
-        name,
-        devdoc,
-        methodIdentifiers,
-      },
+    initInstance({
+      address,
+      abi,
+      network,
+      name,
+      devdoc,
+      methodIdentifiers,
     });
   }
 }

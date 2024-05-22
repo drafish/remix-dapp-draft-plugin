@@ -1,21 +1,31 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useReducer } from 'react';
 import CreateInstance from './components/CreateInstance';
 import EditInstance from './components/EditInstance';
 import DeployPanel from './components/DeployPanel';
 import LoadingScreen from './components/LoadingScreen';
-import { useAppDispatch, useAppSelector } from './redux/hooks';
+import { appInitialState, appReducer } from './reducers/state';
+import { connectRemix, initDispatch, updateState } from './actions';
+import { AppContext } from './contexts';
 import './App.css';
 
 function App(): JSX.Element {
-  const dispatch = useAppDispatch();
-  const abi = useAppSelector((state) => state.instance.abi);
-
+  const [appState, dispatch] = useReducer(appReducer, appInitialState);
   useEffect(() => {
-    dispatch({ type: 'remixide/connect' });
+    updateState(appState);
+  }, [appState]);
+  useEffect(() => {
+    initDispatch(dispatch);
+    updateState(appState);
+    connectRemix();
   }, []);
   return (
-    <div>
-      {Object.keys(abi).length > 0 ? (
+    <AppContext.Provider
+      value={{
+        dispatch,
+        appState,
+      }}
+    >
+      {Object.keys(appState.instance.abi).length > 0 ? (
         <div className="row m-0 pt-3">
           <EditInstance />
           <DeployPanel />
@@ -26,7 +36,7 @@ function App(): JSX.Element {
         </div>
       )}
       <LoadingScreen />
-    </div>
+    </AppContext.Provider>
   );
 }
 

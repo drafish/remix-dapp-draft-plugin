@@ -1,9 +1,10 @@
-import { useAppSelector, useAppDispatch } from '../../redux/hooks';
+import { useContext } from 'react';
 import { MultipleContainers } from '../MultipleContainers';
+import { AppContext } from '../../contexts';
 
 function EditInstance(): JSX.Element {
-  const { abi, items, containers } = useAppSelector((state) => state.instance);
-  const dispatch = useAppDispatch();
+  const { appState, dispatch } = useContext(AppContext);
+  const { abi, items, containers } = appState.instance;
   return (
     <div className="col-9 d-inline-block row">
       <MultipleContainers
@@ -15,7 +16,7 @@ function EditInstance(): JSX.Element {
           newContainers: any = containers
         ) => {
           dispatch({
-            type: 'instance/save',
+            type: 'SET_INSTANCE',
             payload: {
               items: newItems,
               containers: newContainers,

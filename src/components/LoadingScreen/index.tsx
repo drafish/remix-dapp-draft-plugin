@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import BounceLoader from 'react-spinners/BounceLoader';
-import { useAppSelector } from '../../redux/hooks';
+import { AppContext } from '../../contexts';
 
 const LoadingScreen: React.FC = () => {
-  const loading = useAppSelector((state) => state.loading.screen);
+  const { appState } = useContext(AppContext);
+  const loading = appState.loading.screen;
 
   return loading ? (
     <div

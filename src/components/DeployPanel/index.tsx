@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Form, Button, Alert, InputGroup } from 'react-bootstrap';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { deploy, emptyInstance, resetInstance } from '../../actions';
 
 function DeployPanel(): JSX.Element {
   const [formVal, setFormVal] = useState<any>({
@@ -19,14 +19,16 @@ function DeployPanel(): JSX.Element {
     }
     setFormVal({ ...formVal, shareTo });
   };
-  const [deployState, setDeployState] = useState({ code: '', error: '' });
-  const loading = useAppSelector((state) => state.loading['instance/deploy']);
-  const dispatch = useAppDispatch();
+  const [deployState, setDeployState] = useState({
+    code: '',
+    error: '',
+    loading: false,
+  });
   return (
     <div className="col-3 d-inline-block">
       <Button
         onClick={() => {
-          dispatch({ type: 'instance/reset' });
+          resetInstance();
         }}
       >
         Reset Functions
@@ -34,7 +36,7 @@ function DeployPanel(): JSX.Element {
       <Button
         className="ml-3"
         onClick={() => {
-          dispatch({ type: 'instance/empty' });
+          emptyInstance();
         }}
       >
         Delete Dapp
@@ -42,13 +44,9 @@ function DeployPanel(): JSX.Element {
       <Form
         onSubmit={(e) => {
           e.preventDefault();
-          setDeployState({ code: '', error: '' });
-          dispatch({
-            type: 'instance/deploy',
-            payload: formVal,
-            callback: (state: any) => {
-              setDeployState(state);
-            },
+          setDeployState({ code: '', error: '', loading: true });
+          deploy(formVal, (state: any) => {
+            setDeployState({ ...state, loading: false });
           });
         }}
       >
@@ -135,7 +133,10 @@ function DeployPanel(): JSX.Element {
           type="submit"
           disabled={!formVal.email || !formVal.password || !formVal.subdomain}
         >
-          {loading && <i className="fas fa-spinner fa-spin mr-1"></i>}Deploy
+          {deployState.loading && (
+            <i className="fas fa-spinner fa-spin mr-1"></i>
+          )}
+          Deploy
         </Button>
         {deployState.code === 'SUCCESS' && (
           <Alert variant="success" className="mt-4">
