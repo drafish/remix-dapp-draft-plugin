@@ -202,6 +202,8 @@ export const initInstance = async ({
       ...payload,
       abi,
       items,
+      title: devdoc && devdoc.title ? devdoc.title : '',
+      intro: devdoc && devdoc.details ? devdoc.details : '',
       containers: Object.keys(items),
     },
   });
