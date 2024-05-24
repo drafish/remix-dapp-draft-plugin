@@ -165,8 +165,26 @@ export const initInstance = async ({
     if (item.type === 'function') {
       item.id = encodeFunctionId(item);
       const method = functionHashes[item.id.replace('0x', '')];
-      item.intro =
-        devdoc && devdoc.methods[method] ? devdoc.methods[method].details : '';
+      if (devdoc && devdoc.methods[method]) {
+        const { details, params, returns } = devdoc.methods[method];
+        const detailsStr = details ? `@dev ${details}` : '';
+        const paramsStr = params
+          ? Object.keys(params)
+              .map((key) => `@param ${key} ${params[key]}`)
+              .join('\n')
+          : '';
+        const returnsStr = returns
+          ? Object.keys(returns)
+              .map(
+                (key) =>
+                  `@return${/^_\d$/.test(key) ? '' : ' ' + key} ${returns[key]}`
+              )
+              .join('\n')
+          : '';
+        item.intro = [detailsStr, paramsStr, returnsStr]
+          .filter((str) => str !== '')
+          .join('\n');
+      }
       abi[item.id] = item;
     }
   });
