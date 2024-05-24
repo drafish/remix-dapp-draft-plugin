@@ -101,3 +101,12 @@
   }
 }
 
+.instance-input {
+  background-color: var(--custom-select) !important;
+  color: #dfe1ea !important;
+  font-size: 10px;
+}
+.has-args {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}

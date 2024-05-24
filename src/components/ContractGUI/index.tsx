@@ -77,13 +77,19 @@ export function ContractGUI(props: { funcABI: any }) {
       </div>
       <div className="p-2 d-flex">
         <div
-          className="d-flex btn p-0 wrapperElement"
+          className="d-flex p-0 wrapperElement"
           data-id={buttonOptions.dataId}
           data-title={buttonOptions.title}
         >
           <button
             disabled
-            className={`text-nowrap overflow-hidden text-truncate btn btn-sm ${buttonOptions.classList}`}
+            className={`text-nowrap overflow-hidden text-truncate btn btn-sm ${
+              buttonOptions.classList
+            } ${
+              props.funcABI.inputs && props.funcABI.inputs.length > 0
+                ? 'has-args'
+                : ''
+            }`}
             data-id={buttonOptions.dataId}
             data-title={buttonOptions.title}
             style={{ pointerEvents: 'none', width: 100 }}
@@ -91,15 +97,21 @@ export function ContractGUI(props: { funcABI: any }) {
             {title}
           </button>
         </div>
-        {props.funcABI.inputs && props.funcABI.inputs.length > 0 && (
-          <input
-            disabled
-            className="form-control"
-            data-id={'multiParamManagerBasicInputField'}
-            placeholder={inputs}
-            data-title={inputs}
-          />
-        )}
+        <input
+          disabled
+          className="instance-input w-100 p-2 border-0 rounded-right"
+          data-id={'multiParamManagerBasicInputField'}
+          placeholder={inputs}
+          data-title={inputs}
+          style={{
+            height: '2rem',
+            visibility: !(
+              props.funcABI.inputs && props.funcABI.inputs.length > 0
+            )
+              ? 'hidden'
+              : 'visible',
+          }}
+        />
       </div>
       <div className="p-2">
         <textarea
