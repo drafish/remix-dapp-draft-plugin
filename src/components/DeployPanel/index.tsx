@@ -88,7 +88,7 @@ function DeployPanel(): JSX.Element {
           />
           <InputGroup.Text>.surge.sh</InputGroup.Text>
         </InputGroup>
-        <Form.Group className="mb-3" controlId="formShortname">
+        {/* <Form.Group className="mb-3" controlId="formShortname">
           <Form.Label>Disqus Shortname (Optional)</Form.Label>
           <Form.Control
             type="shortname"
@@ -98,7 +98,7 @@ function DeployPanel(): JSX.Element {
               setFormVal({ ...formVal, shortname: e.target.value });
             }}
           />
-        </Form.Group>
+        </Form.Group> */}
         <Form.Group className="mb-3" controlId="formShareTo">
           <Form.Label>Share To (Optional)</Form.Label>
           <div key="inline-checkbox" className="mb-3">
