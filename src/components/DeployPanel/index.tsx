@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Button, Alert, InputGroup } from 'react-bootstrap';
 import { deploy, emptyInstance, resetInstance } from '../../actions';
+import { ThemeUI } from './theme';
 
 function DeployPanel(): JSX.Element {
   const [formVal, setFormVal] = useState<any>({
@@ -26,6 +27,7 @@ function DeployPanel(): JSX.Element {
   });
   return (
     <div className="col-3 d-inline-block">
+      <h1 className="mb-3">QuickDApp Admin</h1>
       <Button
         onClick={() => {
           resetInstance();
@@ -41,6 +43,15 @@ function DeployPanel(): JSX.Element {
       >
         Delete Dapp
       </Button>
+      <Alert variant="info" className="mt-4">
+        QuickDApp deploys to Surge.sh. Surge accounts are free until you reach a
+        level of use. The email & password you input below will register you
+        with a Surge account. The subdomain is your choice but it must be
+        unique. More about{' '}
+        <a target="_blank" href="https://surge.sh/help/">
+          surge.sh
+        </a>
+      </Alert>
       <Form
         onSubmit={(e) => {
           e.preventDefault();
@@ -99,9 +110,9 @@ function DeployPanel(): JSX.Element {
             }}
           />
         </Form.Group> */}
-        <Form.Group className="mb-3" controlId="formShareTo">
+        <Form.Group className="mb-1" controlId="formShareTo">
           <Form.Label>Share To (Optional)</Form.Label>
-          <div key="inline-checkbox" className="mb-3">
+          <div key="inline-checkbox">
             <Form.Check
               inline
               label="Twitter"
@@ -128,6 +139,7 @@ function DeployPanel(): JSX.Element {
             />
           </div>
         </Form.Group>
+        <ThemeUI />
         <Button
           variant="primary"
           type="submit"
@@ -153,16 +165,6 @@ function DeployPanel(): JSX.Element {
             {deployState.error}
           </Alert>
         )}
-        <Alert variant="info" className="mt-4">
-          Your DApp will be deployed to Surge.sh. If you do not have an account
-          there, the email & password you input above will automatically
-          register you with a Surge account. Surge accounts are free until you
-          reach a level of use. The subdomain is your choice but it must be
-          unique. Click here to learn more about. Click here to learn more about{' '}
-          <a target="_blank" href="https://surge.sh/help/">
-            surge.sh
-          </a>
-        </Alert>
       </Form>
     </div>
   );

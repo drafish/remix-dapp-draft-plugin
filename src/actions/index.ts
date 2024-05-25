@@ -3,6 +3,7 @@ import { execution } from '@remix-project/remix-lib';
 // @ts-expect-error
 import SurgeClient from '../utils/surge-client';
 import remixClient from '../remix-client';
+import { themeMap } from '../components/DeployPanel/theme';
 
 const { encodeFunctionId } = execution.txHelper;
 
@@ -125,6 +126,11 @@ export const deploy = async (payload: any, callback: any) => {
     files[`dir/${path}`] = resp.data;
   }
 
+  files['dir/index.html'] = files['dir/index.html'].replace(
+    'assets/css/themes/remix-dark_tvx1s2.css',
+    themeMap[instance.theme].url
+  );
+
   try {
     await surgeClient.publish({
       files,
@@ -236,4 +242,17 @@ export const emptyInstance = async () => {
       containers: [],
     },
   });
+};
+
+export const selectTheme = async (selectedTheme: string) => {
+  await dispatch({ type: 'SET_INSTANCE', payload: { theme: selectedTheme } });
+
+  const linkEles = document.querySelectorAll('link');
+  const nextTheme = themeMap[selectedTheme]; // Theme
+  for (const link of linkEles) {
+    if (link.href.indexOf('/assets/css/themes/') > 0) {
+      link.href = 'https://remix.ethereum.org/' + nextTheme.url;
+      break;
+    }
+  }
 };

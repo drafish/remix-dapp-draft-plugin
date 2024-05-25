@@ -7,6 +7,7 @@ export const appInitialState: any = {
     abi: {},
     items: {},
     containers: [],
+    theme: 'Dark',
   },
 };
 

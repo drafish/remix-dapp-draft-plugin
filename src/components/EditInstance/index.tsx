@@ -8,7 +8,7 @@ function EditInstance(): JSX.Element {
   const { abi, items, containers, title, intro } = appState.instance;
   return (
     <div className="col-9 d-inline-block row">
-      <div className="mx-5 my-2 p-3 w-75 bg-light">
+      <div className="mx-4 my-2 p-3 w-75 bg-light">
         <EditableText
           value={title}
           placeholder="Enter a title for this DApp - if needed"
@@ -17,7 +17,7 @@ function EditInstance(): JSX.Element {
           }}
         />
       </div>
-      <div className="mx-5 my-2 p-3 w-75 bg-light">
+      <div className="mx-4 my-2 p-3 w-75 bg-light">
         <EditableText
           value={intro}
           placeholder="Enter instructions for this DApp - if needed"

@@ -4,8 +4,14 @@ import EditInstance from './components/EditInstance';
 import DeployPanel from './components/DeployPanel';
 import LoadingScreen from './components/LoadingScreen';
 import { appInitialState, appReducer } from './reducers/state';
-import { connectRemix, initDispatch, updateState } from './actions';
+import {
+  connectRemix,
+  initDispatch,
+  updateState,
+  selectTheme,
+} from './actions';
 import { AppContext } from './contexts';
+import remixClient from './remix-client';
 import './App.css';
 
 function App(): JSX.Element {
@@ -16,7 +22,14 @@ function App(): JSX.Element {
   useEffect(() => {
     initDispatch(dispatch);
     updateState(appState);
-    connectRemix();
+    connectRemix().then(() => {
+      remixClient.call('theme', 'currentTheme').then((theme: any) => {
+        selectTheme(theme.name);
+      });
+      remixClient.on('theme', 'themeChanged', (theme: any) => {
+        selectTheme(theme.name);
+      });
+    });
   }, []);
   return (
     <AppContext.Provider
