@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { omitBy } from 'lodash';
 import { execution } from '@remix-project/remix-lib';
 // @ts-expect-error
 import SurgeClient from '../utils/surge-client';
@@ -42,15 +43,31 @@ export const connectRemix = async () => {
   });
 };
 
-export const saveIntro = async (payload: any) => {
-  const { abi } = state.instance;
+export const saveDetails = async (payload: any) => {
+  const { abi, userInput, natSpec } = state.instance;
 
   await dispatch({
     type: 'SET_INSTANCE',
     payload: {
       abi: {
         ...abi,
-        [payload.id]: { ...abi[payload.id], intro: payload.intro },
+        [payload.id]: {
+          ...abi[payload.id],
+          details:
+            natSpec.checked && !payload.details
+              ? natSpec.methods[payload.id]
+              : payload.details,
+        },
+      },
+      userInput: {
+        ...omitBy(userInput, (item) => item === ''),
+        methods: omitBy(
+          {
+            ...userInput.methods,
+            [payload.id]: payload.details,
+          },
+          (item) => item === ''
+        ),
       },
     },
   });
@@ -66,6 +83,29 @@ export const saveTitle = async (payload: any) => {
         ...abi,
         [payload.id]: { ...abi[payload.id], title: payload.title },
       },
+    },
+  });
+};
+
+export const getInfoFromNatSpec = async (value: boolean) => {
+  const { abi, userInput, natSpec } = state.instance;
+  const input = value
+    ? {
+        ...natSpec,
+        ...userInput,
+        methods: { ...natSpec.methods, ...userInput.methods },
+      }
+    : userInput;
+  Object.keys(abi).forEach((id) => {
+    abi[id].details = input.methods[id];
+  });
+  await dispatch({
+    type: 'SET_INSTANCE',
+    payload: {
+      abi,
+      title: input.title,
+      details: input.details,
+      natSpec: { ...natSpec, checked: value },
     },
   });
 };
@@ -163,15 +203,16 @@ export const initInstance = async ({
   ...payload
 }: any) => {
   const functionHashes: any = {};
-  for (const fun in methodIdentifiers) {
-    functionHashes[methodIdentifiers[fun]] = fun;
-  }
-  const abi: any = {};
-  payload.abi.forEach((item: any) => {
-    if (item.type === 'function') {
-      item.id = encodeFunctionId(item);
-      const method = functionHashes[item.id.replace('0x', '')];
-      if (devdoc && devdoc.methods[method]) {
+  const natSpec: any = { checked: false, methods: {} };
+  if (methodIdentifiers && devdoc) {
+    for (const fun in methodIdentifiers) {
+      functionHashes[`0x${methodIdentifiers[fun]}`] = fun;
+    }
+    natSpec.title = devdoc.title;
+    natSpec.details = devdoc.details;
+    Object.keys(functionHashes).forEach((hash) => {
+      const method = functionHashes[hash];
+      if (devdoc.methods[method]) {
         const { details, params, returns } = devdoc.methods[method];
         const detailsStr = details ? `@dev ${details}` : '';
         const paramsStr = params
@@ -187,16 +228,23 @@ export const initInstance = async ({
               )
               .join('\n')
           : '';
-        item.intro = [detailsStr, paramsStr, returnsStr]
+        natSpec.methods[hash] = [detailsStr, paramsStr, returnsStr]
           .filter((str) => str !== '')
           .join('\n');
       }
+    });
+  }
+
+  const abi: any = {};
+  payload.abi.forEach((item: any) => {
+    if (item.type === 'function') {
+      item.id = encodeFunctionId(item);
       abi[item.id] = item;
     }
   });
   const ids = Object.keys(abi);
   const items =
-    ids.length > 1
+    ids.length > 2
       ? {
           A: ids.slice(0, ids.length / 2 + 1),
           B: ids.slice(ids.length / 2 + 1),
@@ -208,15 +256,18 @@ export const initInstance = async ({
       ...payload,
       abi,
       items,
-      title: devdoc && devdoc.title ? devdoc.title : '',
-      intro: devdoc && devdoc.details ? devdoc.details : '',
       containers: Object.keys(items),
+      natSpec,
     },
   });
 };
 
 export const resetInstance = async () => {
-  const ids = Object.keys(state.instance.abi);
+  const abi = state.instance.abi;
+  const ids = Object.keys(abi);
+  ids.forEach((id) => {
+    abi[id] = { ...abi[id], title: '', details: '' };
+  });
   const items =
     ids.length > 1
       ? {
@@ -226,7 +277,13 @@ export const resetInstance = async () => {
       : { A: ids };
   await dispatch({
     type: 'SET_INSTANCE',
-    payload: { items, containers: Object.keys(items) },
+    payload: {
+      items,
+      containers: Object.keys(items),
+      title: '',
+      details: '',
+      abi,
+    },
   });
 };
 
@@ -240,6 +297,9 @@ export const emptyInstance = async () => {
       abi: {},
       items: {},
       containers: [],
+      theme: 'Dark',
+      userInput: { methods: {} },
+      natSpec: { checked: false, methods: {} },
     },
   });
 };

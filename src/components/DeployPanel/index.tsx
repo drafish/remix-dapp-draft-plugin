@@ -1,9 +1,16 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Form, Button, Alert, InputGroup } from 'react-bootstrap';
-import { deploy, emptyInstance, resetInstance } from '../../actions';
+import {
+  deploy,
+  emptyInstance,
+  resetInstance,
+  getInfoFromNatSpec,
+} from '../../actions';
 import { ThemeUI } from './theme';
+import { AppContext } from '../../contexts';
 
 function DeployPanel(): JSX.Element {
+  const { appState } = useContext(AppContext);
   const [formVal, setFormVal] = useState<any>({
     email: localStorage.getItem('__SURGE_EMAIL') || '',
     password: localStorage.getItem('__SURGE_PASSWORD') || '',
@@ -137,6 +144,27 @@ function DeployPanel(): JSX.Element {
                 setShareTo(e.target.value);
               }}
             />
+          </div>
+        </Form.Group>
+        <Form.Group className="mb-1" controlId="formShareTo">
+          <Form.Label>Use NatSpec (Optional)</Form.Label>
+          <div className="custom-control custom-switch">
+            <input
+              type="checkbox"
+              className="custom-control-input"
+              id="useNatSpec"
+              checked={appState.instance.natSpec.checked}
+              onChange={(e) => {
+                getInfoFromNatSpec(e.target.checked);
+              }}
+            />
+            <label
+              className="custom-control-label pt-1"
+              htmlFor="useNatSpec"
+              style={{ color: '#dfe1ea' }}
+            >
+              Retrieve info from the contract's NatSpec
+            </label>
           </div>
         </Form.Group>
         <ThemeUI />

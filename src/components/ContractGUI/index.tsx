@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { execution } from '@remix-project/remix-lib';
-import { saveIntro, saveTitle } from '../../actions';
+import { saveDetails, saveTitle } from '../../actions';
 import EditableText from '../EditableText';
 
 const txHelper = execution.txHelper;
@@ -115,10 +115,10 @@ export function ContractGUI(props: { funcABI: any }) {
       </div>
       <div className="p-2">
         <EditableText
-          value={props.funcABI.intro}
+          value={props.funcABI.details}
           placeholder="Enter instructions for this function - if needed"
           onSave={(value) => {
-            saveIntro({ id: props.funcABI.id, intro: value });
+            saveDetails({ id: props.funcABI.id, details: value });
           }}
           textarea
         />

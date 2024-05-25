@@ -8,6 +8,8 @@ export const appInitialState: any = {
     items: {},
     containers: [],
     theme: 'Dark',
+    userInput: { methods: {} },
+    natSpec: { checked: false, methods: {} },
   },
 };
 
@@ -23,16 +25,6 @@ export const appReducer = (state = appInitialState, action: any): any => {
       return {
         ...state,
         instance: { ...state.instance, ...action.payload },
-      };
-
-    case 'EMPTY_INSTANCE':
-      return {
-        name: '',
-        address: '',
-        network: '',
-        abi: {},
-        items: {},
-        containers: [],
       };
 
     default:

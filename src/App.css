@@ -128,3 +128,11 @@
 .cursor_pointer:hover {
   color: var(--secondary);
 }
+.custom-control-input:checked~.custom-control-label::before {
+  color: #fff;
+  border-color: #007bff;
+  background-color: #007bff;
+}
+.custom-switch .custom-control-input:checked~.custom-control-label:after {
+  background-color: #fff;
+}

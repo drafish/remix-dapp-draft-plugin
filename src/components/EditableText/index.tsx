@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const EditableText = ({
   value,
@@ -13,6 +13,10 @@ const EditableText = ({
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [tempText, setTempText] = useState(value);
+
+  useEffect(() => {
+    setTempText(value);
+  }, [value]);
 
   const handleEdit = () => {
     setIsEditing(true);
