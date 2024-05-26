@@ -10,7 +10,8 @@ import { ThemeUI } from './theme';
 import { AppContext } from '../../contexts';
 
 function DeployPanel(): JSX.Element {
-  const { appState } = useContext(AppContext);
+  const { appState, dispatch } = useContext(AppContext);
+  const { verified, natSpec } = appState.instance;
   const [formVal, setFormVal] = useState<any>({
     email: localStorage.getItem('__SURGE_EMAIL') || '',
     password: localStorage.getItem('__SURGE_PASSWORD') || '',
@@ -50,7 +51,7 @@ function DeployPanel(): JSX.Element {
       >
         Delete Dapp
       </Button>
-      <Alert variant="info" className="mt-4">
+      <Alert variant="info" className="my-2">
         QuickDApp deploys to Surge.sh. Surge accounts are free until you reach a
         level of use. The email & password you input below will register you
         with a Surge account. The subdomain is your choice but it must be
@@ -68,7 +69,7 @@ function DeployPanel(): JSX.Element {
           });
         }}
       >
-        <Form.Group className="mb-3" controlId="formEmail">
+        <Form.Group controlId="formEmail">
           <Form.Label>Email</Form.Label>
           <Form.Control
             type="email"
@@ -80,7 +81,7 @@ function DeployPanel(): JSX.Element {
             }}
           />
         </Form.Group>
-        <Form.Group className="mb-3" controlId="formPassword">
+        <Form.Group controlId="formPassword">
           <Form.Label>Password</Form.Label>
           <Form.Control
             type="password"
@@ -93,7 +94,7 @@ function DeployPanel(): JSX.Element {
           />
         </Form.Group>
         <Form.Label>Subdomain</Form.Label>
-        <InputGroup className="mb-3">
+        <InputGroup>
           <InputGroup.Text>https://</InputGroup.Text>
           <Form.Control
             type="subdomain"
@@ -117,7 +118,7 @@ function DeployPanel(): JSX.Element {
             }}
           />
         </Form.Group> */}
-        <Form.Group className="mb-1" controlId="formShareTo">
+        <Form.Group controlId="formShareTo">
           <Form.Label>Share To (Optional)</Form.Label>
           <div key="inline-checkbox">
             <Form.Check
@@ -146,14 +147,14 @@ function DeployPanel(): JSX.Element {
             />
           </div>
         </Form.Group>
-        <Form.Group className="mb-1" controlId="formShareTo">
+        <Form.Group controlId="formShareTo">
           <Form.Label>Use NatSpec (Optional)</Form.Label>
           <div className="custom-control custom-switch">
             <input
               type="checkbox"
               className="custom-control-input"
               id="useNatSpec"
-              checked={appState.instance.natSpec.checked}
+              checked={natSpec.checked}
               onChange={(e) => {
                 getInfoFromNatSpec(e.target.checked);
               }}
@@ -167,10 +168,30 @@ function DeployPanel(): JSX.Element {
             </label>
           </div>
         </Form.Group>
+        <Form.Group controlId="formVerified">
+          <Form.Label>Verified by Etherscan (Optional)</Form.Label>
+          <div key="inline-checkbox">
+            <Form.Check
+              inline
+              label="Verified"
+              name="group2"
+              type="checkbox"
+              checked={verified}
+              id="inline-checkbox-1"
+              onChange={(e) => {
+                dispatch({
+                  type: 'SET_INSTANCE',
+                  payload: { verified: e.target.checked },
+                });
+              }}
+            />
+          </div>
+        </Form.Group>
         <ThemeUI />
         <Button
           variant="primary"
           type="submit"
+          className="mt-3"
           disabled={!formVal.email || !formVal.password || !formVal.subdomain}
         >
           {deployState.loading && (

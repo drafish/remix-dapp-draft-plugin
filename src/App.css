@@ -136,3 +136,6 @@
 .custom-switch .custom-control-input:checked~.custom-control-label:after {
   background-color: #fff;
 }
+.custom-switch .custom-control-label:after {
+  top: calc(.25rem + 1px);
+}

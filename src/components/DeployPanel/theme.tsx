@@ -43,7 +43,7 @@ export function ThemeUI() {
   }, []);
 
   return (
-    <div className="d-block my-2">
+    <div className="d-block">
       <label>Themes</label>
       <div className="d-flex align-items-center">
         <select
