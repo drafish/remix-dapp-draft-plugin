@@ -35,7 +35,7 @@ function DeployPanel(): JSX.Element {
   });
   return (
     <div className="col-3 d-inline-block">
-      <h1 className="mb-3">QuickDApp Admin</h1>
+      <h3 className="mb-3">QuickDapp Admin</h3>
       <Button
         onClick={() => {
           resetInstance();
@@ -52,7 +52,7 @@ function DeployPanel(): JSX.Element {
         Delete Dapp
       </Button>
       <Alert variant="info" className="my-2">
-        QuickDApp deploys to Surge.sh. Surge accounts are free until you reach a
+        QuickDapp deploys to Surge.sh. Surge accounts are free until you reach a
         level of use. The email & password you input below will register you
         with a Surge account. The subdomain is your choice but it must be
         unique. More about{' '}

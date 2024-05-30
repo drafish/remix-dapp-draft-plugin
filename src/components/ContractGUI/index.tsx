@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { execution } from '@remix-project/remix-lib';
 import { saveDetails, saveTitle } from '../../actions';
-import EditableText from '../EditableText';
 
 const txHelper = execution.txHelper;
 
@@ -67,10 +66,11 @@ export function ContractGUI(props: { funcABI: any }) {
   return (
     <div className={`d-inline-block`} style={{ width: '90%' }}>
       <div className="p-2">
-        <EditableText
+        <input
+          className="form-control"
+          placeholder="Title of function"
           value={props.funcABI.title}
-          placeholder="Enter a title for this function - if needed"
-          onSave={(value) => {
+          onChange={({ target: { value } }) => {
             saveTitle({ id: props.funcABI.id, title: value });
           }}
         />
@@ -114,13 +114,13 @@ export function ContractGUI(props: { funcABI: any }) {
         />
       </div>
       <div className="p-2">
-        <EditableText
+        <textarea
+          className="form-control"
+          placeholder="Instructions for function"
           value={props.funcABI.details}
-          placeholder="Enter instructions for this function - if needed"
-          onSave={(value) => {
+          onChange={({ target: { value } }) => {
             saveDetails({ id: props.funcABI.id, details: value });
           }}
-          textarea
         />
       </div>
     </div>

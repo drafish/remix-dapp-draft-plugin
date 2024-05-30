@@ -97,14 +97,14 @@ export const getInfoFromNatSpec = async (value: boolean) => {
       }
     : userInput;
   Object.keys(abi).forEach((id) => {
-    abi[id].details = input.methods[id];
+    abi[id].details = input.methods[id] || '';
   });
   await dispatch({
     type: 'SET_INSTANCE',
     payload: {
       abi,
-      title: input.title,
-      details: input.details,
+      title: input.title || '',
+      details: input.details || '',
       natSpec: { ...natSpec, checked: value },
     },
   });
@@ -297,6 +297,8 @@ export const emptyInstance = async () => {
       abi: {},
       items: {},
       containers: [],
+      title: '',
+      details: '',
       theme: 'Dark',
       userInput: { methods: {} },
       natSpec: { checked: false, methods: {} },

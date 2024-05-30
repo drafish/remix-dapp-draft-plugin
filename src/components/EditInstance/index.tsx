@@ -2,7 +2,6 @@ import { useContext } from 'react';
 import { omitBy } from 'lodash';
 import { MultipleContainers } from '../MultipleContainers';
 import { AppContext } from '../../contexts';
-import EditableText from '../EditableText';
 
 function EditInstance(): JSX.Element {
   const { appState, dispatch } = useContext(AppContext);
@@ -11,10 +10,11 @@ function EditInstance(): JSX.Element {
   return (
     <div className="col-9 d-inline-block row">
       <div className="mx-4 my-2 p-3 w-75 bg-light">
-        <EditableText
+        <input
+          className="form-control"
+          placeholder="Dapp title"
           value={title}
-          placeholder="Enter a title for this DApp - if needed"
-          onSave={(value) => {
+          onChange={({ target: { value } }) => {
             dispatch({
               type: 'SET_INSTANCE',
               payload: {
@@ -29,10 +29,11 @@ function EditInstance(): JSX.Element {
         />
       </div>
       <div className="mx-4 my-2 p-3 w-75 bg-light">
-        <EditableText
+        <textarea
+          className="form-control"
+          placeholder="Dapp instructions"
           value={details}
-          placeholder="Enter instructions for this DApp - if needed"
-          onSave={(value) => {
+          onChange={({ target: { value } }) => {
             dispatch({
               type: 'SET_INSTANCE',
               payload: {
@@ -44,7 +45,6 @@ function EditInstance(): JSX.Element {
               },
             });
           }}
-          textarea
         />
       </div>
       <MultipleContainers
