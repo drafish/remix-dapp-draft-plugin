@@ -314,6 +314,7 @@ export const selectTheme = async (selectedTheme: string) => {
   for (const link of linkEles) {
     if (link.href.indexOf('/assets/css/themes/') > 0) {
       link.href = 'https://remix.ethereum.org/' + nextTheme.url;
+      document.documentElement.style.setProperty('--theme', nextTheme.quality);
       break;
     }
   }

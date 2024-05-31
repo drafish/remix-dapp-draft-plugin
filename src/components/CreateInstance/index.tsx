@@ -18,8 +18,8 @@ const CreateInstance: React.FC = () => {
         initInstance({ ...formVal });
       }}
     >
-      <Form.Group className="mb-3" controlId="formAddress">
-        <Form.Label>address</Form.Label>
+      <Form.Group className="mb-2" controlId="formAddress">
+        <Form.Label className="text-uppercase mb-0">address</Form.Label>
         <Form.Control
           type="address"
           placeholder="Enter address"
@@ -30,8 +30,8 @@ const CreateInstance: React.FC = () => {
         />
       </Form.Group>
 
-      <Form.Group className="mb-3" controlId="formAbi">
-        <Form.Label>abi</Form.Label>
+      <Form.Group className="mb-2" controlId="formAbi">
+        <Form.Label className="text-uppercase mb-0">abi</Form.Label>
         <Form.Control
           as="textarea"
           rows={3}
@@ -50,8 +50,8 @@ const CreateInstance: React.FC = () => {
         />
       </Form.Group>
 
-      <Form.Group className="mb-3" controlId="formName">
-        <Form.Label>name</Form.Label>
+      <Form.Group className="mb-2" controlId="formName">
+        <Form.Label className="text-uppercase mb-0">name</Form.Label>
         <Form.Control
           type="name"
           placeholder="Enter name"
@@ -62,8 +62,8 @@ const CreateInstance: React.FC = () => {
         />
       </Form.Group>
 
-      <Form.Group className="mb-3" controlId="formNetwork">
-        <Form.Label>network</Form.Label>
+      <Form.Group className="mb-2" controlId="formNetwork">
+        <Form.Label className="text-uppercase mb-0">network</Form.Label>
         <Form.Control
           type="network"
           placeholder="Enter network"
@@ -76,6 +76,7 @@ const CreateInstance: React.FC = () => {
       <Button
         variant="primary"
         type="submit"
+        className="mt-2"
         disabled={
           !formVal.address ||
           !formVal.name ||

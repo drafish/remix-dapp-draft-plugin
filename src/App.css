@@ -128,14 +128,19 @@
 .cursor_pointer:hover {
   color: var(--secondary);
 }
-.custom-control-input:checked~.custom-control-label::before {
-  color: #fff;
-  border-color: #007bff;
-  background-color: #007bff;
+.custom-dropdown-items {
+  padding: 0.25rem 0.25rem;
+  border-radius: .25rem;
+  background: var(--custom-select);
 }
-.custom-switch .custom-control-input:checked~.custom-control-label:after {
-  background-color: #fff;
-}
-.custom-switch .custom-control-label:after {
-  top: calc(.25rem + 1px);
+
+.custom-dropdown-items a {
+  border-radius: .25rem;
+  text-transform: none;
+  text-decoration: none;
+  font-weight: normal;
+  font-size: 0.875rem;
+  padding: 0.25rem 0.25rem;
+  width: auto;
+  color: var(--text);
 }
