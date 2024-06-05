@@ -256,6 +256,14 @@
   dependencies:
     tslib "^2.0.0"
 
+"@drafish/surge-client@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.npmjs.org/@drafish/surge-client/-/surge-client-1.1.0.tgz#8a77a521a89fc2bbb9ec8b7877dceb38a92d7e50"
+  integrity sha512-xvltyden+n76sXG/Ma7mI16vhRZICsAG7HNU/yo981Qp+itj+uUa+WkEAryn5kRFu1mO+VQ7VhWpvcbJzWALTQ==
+  dependencies:
+    buffer "^6.0.3"
+    pako "^2.1.0"
+
 "@esbuild-plugins/node-globals-polyfill@^0.2.3":
   version "0.2.3"
   resolved "https://registry.npmjs.org/@esbuild-plugins/node-globals-polyfill/-/node-globals-polyfill-0.2.3.tgz#0e4497a2b53c9e9485e149bc92ddb228438d6bcf"
@@ -2508,6 +2516,11 @@ p-locate@^5.0.0:
   integrity sha512-LaNjtRWUBY++zB5nE/NwcaoMylSPk+S+ZHNB1TzdbMJMny6dynpAGt7X/tl/QYq3TIeE6nxHppbo2LGymrG5Pw==
   dependencies:
     p-limit "^3.0.2"
+
+pako@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.npmjs.org/pako/-/pako-2.1.0.tgz#266cc37f98c7d883545d11335c00fbd4062c9a86"
+  integrity sha512-w+eufiZ1WuJYgPXbV/PO3NCMEc3xqylkKHzp8bxp1uW4qaSNQUkwmLLEc3kKsfz8lpV1F8Ht3U1Cm+9Srog2ug==
 
 parent-module@^1.0.0:
   version "1.0.1"

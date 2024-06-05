@@ -2,7 +2,7 @@ import axios from 'axios';
 import { omitBy } from 'lodash';
 import { execution } from '@remix-project/remix-lib';
 // @ts-expect-error
-import SurgeClient from '../utils/surge-client';
+import SurgeClient from '@drafish/surge-client';
 import remixClient from '../remix-client';
 import { themeMap } from '../components/DeployPanel/theme';
 
