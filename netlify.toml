@@ -1,0 +1,7 @@
+[[redirects]]
+  from = "/surge-proxy/*"
+  to = "https://surge.surge.sh/:splat"
+  host = "surge.surge.sh"
+  status = 200
+  force = true
+
