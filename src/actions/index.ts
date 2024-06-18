@@ -140,8 +140,17 @@ export const deploy = async (payload: any, callback: any) => {
   const { data } = await axios.get(
     'https://remix-dapp.pages.dev/manifest.json'
   );
-  const { src, file, css, assets } = data['index.html'];
-  const paths = [src, file, ...css, ...assets];
+
+  let paths: any = [];
+
+  Object.keys(data).forEach((key) => {
+    if (data[key].src === 'index.html') {
+      const { src, file, css, assets } = data[key];
+      paths = paths.concat([src, file, ...css, ...assets]);
+    } else {
+      paths.push(data[key].file);
+    }
+  });
 
   const instance = state.instance;
 
