@@ -9,7 +9,7 @@ import { themeMap } from '../components/DeployPanel/theme';
 const { encodeFunctionId } = execution.txHelper;
 
 const surgeClient = new SurgeClient({
-  proxy: 'https://vercel-proxy-bice-six.vercel.app',
+  proxy: '/surge-proxy',
   onError: (err: Error) => {
     console.log(err);
   },

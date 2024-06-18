@@ -21,6 +21,15 @@ const viteConfig = ({ mode }: any) => {
         ],
       },
     },
+    server: {
+      proxy: {
+        '/surge-proxy': {
+          target: 'https://surge.surge.sh',
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/surge-proxy/, ''),
+        },
+      },
+    },
     build: {
       rollupOptions: {
         plugins: [polyfillNode()],
