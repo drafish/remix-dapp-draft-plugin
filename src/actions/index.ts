@@ -200,8 +200,6 @@ export const deploy = async (payload: any, callback: any) => {
   } catch ({ message }: any) {
     if (message === '403') {
       callback({ code: 'ERROR', error: 'this domain belongs to someone else' });
-    } else if (message === '504') {
-      callback({ code: 'ERROR', error: 'gateway timeout, please try again' });
     } else {
       callback({ code: 'ERROR', error: 'unknow error, please try again' });
     }
