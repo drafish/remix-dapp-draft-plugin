@@ -256,10 +256,10 @@
   dependencies:
     tslib "^2.0.0"
 
-"@drafish/surge-client@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.npmjs.org/@drafish/surge-client/-/surge-client-1.1.0.tgz#8a77a521a89fc2bbb9ec8b7877dceb38a92d7e50"
-  integrity sha512-xvltyden+n76sXG/Ma7mI16vhRZICsAG7HNU/yo981Qp+itj+uUa+WkEAryn5kRFu1mO+VQ7VhWpvcbJzWALTQ==
+"@drafish/surge-client@^1.1.2":
+  version "1.1.2"
+  resolved "https://registry.npmjs.org/@drafish/surge-client/-/surge-client-1.1.2.tgz#7c8e68c8c9e1f7b88c9fc3d500d1ba26291a0342"
+  integrity sha512-HN4gLophmVvO1wfxiOjIC8yGmRuh5h8mZrVLlZELuZvUmT+6aQeP8Em71nO0afY+t+s27nwo9efhIGsPpEsMMg==
   dependencies:
     buffer "^6.0.3"
     pako "^2.1.0"
