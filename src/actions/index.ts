@@ -197,11 +197,10 @@ export const deploy = async (payload: any, callback: any) => {
       },
       onTick: (tick: string) => {},
     });
-  } catch (error: any) {
-    const { code } = JSON.parse(error.message);
-    if (code === 403) {
+  } catch ({ message }: any) {
+    if (message === '403') {
       callback({ code: 'ERROR', error: 'this domain belongs to someone else' });
-    } else if (code === 504) {
+    } else if (message === '504') {
       callback({ code: 'ERROR', error: 'gateway timeout, please try again' });
     } else {
       callback({ code: 'ERROR', error: 'unknow error, please try again' });
